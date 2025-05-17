@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BEAN Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: black;
+      font-family: 'Courier New', monospace;
+      color: #00ff9f;
+      overflow-x: hidden;
+    }
+
+    #tsparticles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .title {
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(to right, #00ff9f, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glitch 1s infinite;
+      text-align: center;
+    }
+
+    @keyframes glitch {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-2px); }
+      40% { transform: translateX(2px); }
+      60% { transform: translateX(-1px); }
+      80% { transform: translateX(1px); }
+      100% { transform: translateX(0); }
+    }
+
+    .dropdown-toggle {
+      background: transparent;
+      border: 2px solid #00ff9f;
+      padding: 12px 24px;
+      font-size: 16px;
+      color: #00ff9f;
+      cursor: pointer;
+      border-radius: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .links {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .link {
+      color: #00ff9f;
+      text-decoration: none;
+      font-size: 16px;
+      position: relative;
+      padding: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .link:hover {
+      color: white;
+    }
+
+    .link::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(270deg,
+        red, orange, yellow, green, cyan, blue, violet, red);
+      background-size: 600% 600%;
+      animation: rainbow 5s linear infinite;
+      border-radius: 2px;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="tsparticles"></div>
+
+<div class="container">
+  <div class="title">UTUBE Unbl0cked</div>
+
+  <div class="links" id="linkList"></div>
+
+  <button class="dropdown-toggle" onclick="toggleLinks()">☰ Show Links</button>
+</div>
+
+<script>
+  const links = [
+    "https://codepen.io/weaF_z/full/RwJVywE",
+    "https://gzhhqm.csb.app/",
+    "https://sites.google.com/view/n0repted/home"
+  ];
+
+  const linkList = document.getElementById("linkList");
+
+  links.forEach(link => {
+    const a = document.createElement("a");
+    a.className = "link";
+    a.href = link;
+    a.target = "_blank";
+    a.textContent = link;
+    linkList.appendChild(a);
+  });
+
+  function toggleLinks() {
+    const list = document.getElementById("linkList");
+    list.style.display = list.style.display === "flex" ? "none" : "flex";
+  }
+</script>
+
+<!-- tsParticles Config -->
+<script>
+  tsParticles.load("tsparticles", {
+    fullScreen: { enable: false },
+    background: { color: "#000000" },
+    fpsLimit: 60,
+    particles: {
+      number: { value: 100 },
+      color: { value: "#00ff9f" },
+      shape: { type: "circle" },
+      opacity: { value: 0.5 },
+      size: { value: 2 },
+      move: {
+        enable: true,
+        speed: 1,
+        direction: "none",
+        outModes: "bounce"
+      }
+    },
+    interactivity: {
+      events: {
+        onHover: { enable: true, mode: "repulse" },
+        resize: true
+      },
+      modes: {
+        repulse: { distance: 100, duration: 0.4 }
+      }
+    },
+    detectRetina: true
+  });
+</script>
+
+</body>
+</html>
