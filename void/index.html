@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BEAN Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: black;
+      font-family: 'Courier New', monospace;
+      color: #00ff9f;
+      overflow-x: hidden;
+    }
+
+    #tsparticles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .title {
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(to right, #00ff9f, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glitch 1s infinite;
+      text-align: center;
+    }
+
+    @keyframes glitch {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-2px); }
+      40% { transform: translateX(2px); }
+      60% { transform: translateX(-1px); }
+      80% { transform: translateX(1px); }
+      100% { transform: translateX(0); }
+    }
+
+    .dropdown-toggle {
+      background: transparent;
+      border: 2px solid #00ff9f;
+      padding: 12px 24px;
+      font-size: 16px;
+      color: #00ff9f;
+      cursor: pointer;
+      border-radius: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .links {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .link {
+      color: #00ff9f;
+      text-decoration: none;
+      font-size: 16px;
+      position: relative;
+      padding: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .link:hover {
+      color: white;
+    }
+
+    .link::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(270deg,
+        red, orange, yellow, green, cyan, blue, violet, red);
+      background-size: 600% 600%;
+      animation: rainbow 5s linear infinite;
+      border-radius: 2px;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="tsparticles"></div>
+
+<div class="container">
+  <div class="title">BEAN</div>
+
+  <div class="links" id="linkList"></div>
+
+  <button class="dropdown-toggle" onclick="toggleLinks()">☰ Show Links</button>
+</div>
+
+<script>
+  const links = [
+"https://d4yykjhjghgngy.bg.geek.nz",
+"https://aubsqgrrgdijohfvkjdvxkjbfxhbjcvxkj.bg.geek.nz",
+"https://flota.pltems.com.lightspeedsystems.help",
+"https://chrome.google.about.bg.geek.nz",
+"https://gloval-zone60.renaissance",
+"https://comlightspeedsystems.com.lightspeedsystems.help",
+"https://hakuh.bg.geek.nz",
+"https://zone60.renaissance",
+"https://bean-is-cool.blablablablabla.bcsdny.org.void.radio.am",
+"https://glsakdjfalsdkjf4lasddjflasdkjfjkflkasjdflasjk-zone50.renaissance-go.de.com",
+"https://zone233.renaissance",
+"https://global-zony50.renaissance",
+"https://comivateclients.ie.lightspeedsystems.help",
+"https://ekalkto.bg.geek.nz",
+"https://global-zone05.renaissance",
+"https://golbal-zone50.renaissance-go.de.com",
+"https://dvasson441dnq.bg.geek.nz",
+"https://globalqzon50.renaissance-go.de.com",
+"https://comms.helplightspeedsystems.com.lightspeedsystems.help",
+"https://global-zone1000000000000000.renaissance-go.de.com",
+"https://edu.cloudfront.net.bg.geek.nz",
+"https://global-50.renaissance",
+"https://gloval-zone40.renaissance",
+"https://auth.zyyahlabs.comconnect.toom.lightspeedsystems.help",
+"https://gloval-zone60.renaissance-go.de.com",
+"https://dfsol48.nsdfsolution.ithtspeedsystems.helplightspeedsystems.com.lightspeedsystems.help",
+"https://bfp.cz.com.lightspeedsystems.help",
+"https://tomato.renaissance-go.de.com",
+"https://anythingggg.bg.geek.nz",
+"https://e4gtrhyte.bg.geek.nz",
+"https://geometry.artclass.networkindia.com",
+"https://de.pl.com.lightspeedsystems.help",
+"https://m.void.radio.am",
+"https://blablablablabla.bcsdny.org.void.radio.am",
+"https://hantv.bg.geek.nz",
+"https://www.canvas-global50.renaissance-go.de.com",
+"https://akuabatadesigns.com.idghtspeedsystems.helplightspeedsystems.com.lightspeedsystems.help",
+"https://www.hlobal-zone.renaissance-go.de.com",
+"https://guihome.netems.com.lightspeedsystems.help",
+"https://hasty.bg.geek.nz",
+"https://blockchainuri.comvcom.lightspeedsystems.help",
+"https://espalieredtrees.comevs.com.lightspeedsystems.help",
+"https://global-zone40.renaissance-go.de.com",
+"https://aasdfghjklkjhgfertyytrdxf44nmkjhgdbghyyyyyytffffffffyhffgh99f.bg.geek.nz",
+"https://edpuzzle.co.com",
+"https://gloabal.zone",
+"https://2fasdighjklertyuiotgv4erdcingbnjiflgwditygtsdkfutysdkfuy.bg.geek.nz",
+"https://antishim.bg.geek.nz",
+"https://express.tdobe.com.bg.geek.nz",
+"https://hlabal-zone50.renaissance-go.de.com",
+"https://global-zone51.renaissance",
+"https://sigma.zone.50.renaissance-go.de.com",
+"https://boundarygb.co.ukcfd.complightspeedsystems.com.lightspeedsystems.help",
+"https://anythiggg.bg.geek.nz",
+"https://www.globals-zone50.renaissance-go.de.com",
+"https://adobeishim.bg.geek.nz",
+"https://edu.cloudfrount.net.bg.geek.nz",
+"https://www.sadas.void.radio.am",
+"https://gobal-zone50.renaissance",
+"https://zones0.renaissance-go.de.com",
+"https://bawktu.bg.geek.nz",
+"https://comelpco.zaa.lightspeedsystems.helplightspeedsystems.com.lightspeedsystems.help",
+"https://deuahpfiaweoawoiefa-zone50.renaissance-go.de.com",
+"https://comkawktu.bg.geek.nz",
+"https://flhs.bcsdny.org.void.radio.am",
+"https://clubef243d0e8213.lightspeedsystems.help",
+"https://devaa.lightspeedsystems.helplightspeedsystems.com.lightspeedsystems.help",
+"https://goole.com.bg.geek.nz",
+"https://comrs.comedsystems.com.lightspeedsystems.help",
+"https://awltu.bg.geek.nz",
+"https://16johncossroad.bg.geek.nz",
+"https://com.comlightspeedsystems.com.lightspeedsystems.help",
+"https://globals-zone50.renaissance-go.de.com",
+"https://geomerty.artclass.networkindia.com",
+"https://adobe.come.bg.geek.nz",
+"https://globle-zone52.renaissance",
+"https://doidwoj.bg.geek.nz",
+"https://gloal-zone50.renaissance",
+"https://artmon.ru",
+"https://adobe.express.bg.geek.nz",
+"https://gneepgherpfiuahpfiaweoawoiefa-zone50.renaissance-go.de.com",
+"https://globvle-zone50.renaissance",
+"https://bru.bg.geek.nz",
+"https://asldfkjasdlkfjasldkfjaslkdfjzone50.renaissance",
+"https://google.classroom.bg.geek.nz",
+"https://glovel-zone50.renaissance",
+"https://6789999.bg.geek.nz",
+"https://16johncrossinroad.bg.geek.nz",
+"https://17johncrossingroad.bg.geek.nz",
+"https://gdu.cloudfront.net.bg.geek.nz",
+"https://glenblanscet.comms.com.lightspeedsystems.help",
+"https://is-cool.void.radio.am",
+"https://andreaspickles.bg.geek.nz",
+"https://com.google.bg.geek.nz",
+"https://www.gloval.zone50.renaissance-go.de.com",
+"https://cloudfrom.met.bg.geek.nz",
+"https://gdv.bg.geek.nz",
+"https://cloud.deeplight.comonnect.toom.lightspeedsystems.help",
+"https://shart-zone50.renaissance",
+"https://antonioresendez3.bg.geek.nz",
+"https://craftclan.comadicion.commedsystems.com.lightspeedsystems.help",
+"https://alec.bg.geek.nz",
+"https://googie.com.bg.geek.nz",
+"https://haircut.bg.geek.nz",
+"https://www.global-zene50.renaissance-go.de.com",
+"https://gloqle-zone50.renaissance",
+"https://exspress.adobe.com.bg.geek.nz",
+"https://exspress.abode.com.bg.geek.nz",
+"https://adobe.com.bg.geek.nz",
+"https://72801584736.bg.geek.nz",
+"https://dad-hub.comom",
+"https://1.linewize.bg.geek.nz",
+"https://46543463fbdfsgeg534-zone50.renaissance",
+"https://23.comspeedsystems.com.lightspeedsystems.help",
+"https://zone23.renaissance",
+"https://bequietcorbenhahaha.surfnet.ca",
+"https://cryptomoneyac.pages.devspeedsystems.com.lightspeedsystems.help",
+"https://express.abobe.com.bg.geek.nz",
+"https://45fd33-zone50.renaissance",
+"https://des.com.lightspeedsystems.help",
+"https://global-zone10000.renaissance-go.de.com",
+"https://16johncrssesroad.bg.geek.nz",
+"https://1johncrossedroad.bg.geek.nz",
+"https://drgdrf8yhjut4wes8d7yunggyuh.bg.geek.nz",
+"https://gregoryfeeley.comon.deorg.uksystems.com.lightspeedsystems.help",
+"https://express.abloe.com.bg.geek.nz",
+"https://d3rtzzzsiu7gdr.cloudfront.net.bg.geek.nz",
+"https://org.com.void.radio.am",
+"https://cloudfront.net2779cbcb-a02f-48a3-9e2e-95a8d12223d165.bg.geek.nz",
+"https://www.46543463fbdfsgeg534-zone50.renaissance-go.de.com",
+"https://emmet-zone50.renaissance",
+"https://loper-zone50.renaissance-go.de.com",
+"https://global-zone500.renaissance-go.de.com",
+"https://edpuzzle.hawktu.bg.geek.nz",
+"https://eddpuzzle.hawktu.bg.geek.nz",
+"https://adobe.express.com.bg.geek.nz",
+"https://atcoms.helplightspeedsystems.com.lightspeedsystems.help",
+"https://comomoom.lightspeedsystems.help",
+"https://comitlab.artmon.ru",
+"https://www.50.renaissance-go.de.com",
+"https://16johncrossword.bg.geek.nz",
+"https://rizzler.sigma.pickle.bcsdny.org.void.radio.am",
+"https://agencygodb.netm.lightspeedsystems.help",
+"https://brentsforehead50-zone.renaissance",
+"https://muncz.deuahpfiaweoawoiefa",
+"https://ishowspeed-zone50.renaissance-go.de.com",
+"https://google.education.job.bg.geek.nz",
+"https://dont-let-luke.get-the-link.follobusiness.com",
+"https://cloudfront.net",
+"https://globall-zone50.renaissance",
+"https://breckyhill.bg.geek.nz",
+"https://cometthtspeedsystems.com.lightspeedsystems.help",
+"https://dsjklfhsdkjf.void.radio.am",
+"https://www.zone50.renaissance-go.de.com",
+"https://global-zone10000000000000.renaissance",
+"https://global-zone10000000.renaissance-go.de.com",
+"https://fortnite.hacker.bg.geek.nz",
+"https://directcom.lightspeedsystems.help",
+"https://geek.nzhawktu.bg.geek.nz",
+"https://gohawktu.bg.geek.nz",
+"https://16johncrossroad.bg.geek.nz",
+"https://giobal-zone50.renaissance",
+"https://3x3vs.comhopystems.com.lightspeedsystems.help",
+"https://global-zone1000000.renaissance",
+"https://brentsforehead-zone50.renaissance",
+"https://dealstems.com.lightspeedsystems.help",
+"https://co.ukmmercialappraisers.comelplightspeedsystems.com.lightspeedsystems.help",
+"https://account.lightspeedsystems.help",
+"https://www.lobal-zone50.renaissance-go.de.com",
+"https://the-link.follobusiness.com",
+"https://lebron-zone50.renaissance",
+"https://6.bg.geek.nz",
+"https://comimages.comlightspeedsystems.com.lightspeedsystems.help",
+"https://d4yykjhghjgngy.bg.geek.nz",
+"https://gloval-zone51.renaissance",
+"https://www.hlabal-zone50.renaissance-go.de.com",
+"https://devtems.com.lightspeedsystems.help",
+"https://geekvida.essystems.com.lightspeedsystems.help",
+"https://www.golbl-zone50.renaissance-go.de.com",
+"https://www.ms.void.radio.am",
+"https://www.global-zone1000000000000000000000000000000000000000000000.renaissance-go.de.com",
+"https://gmaahc.si.edu.cloudfront.net.bg.geek.nz",
+"https://gsdsadhdhsajdasjdhaskjdh.bg.geek.nz",
+"https://globe-zone50.renaissance-go.de.com",
+"https://effect99.jumpingcrab.com",
+"https://asldfkjasdlkfjasldkfjaslkdfjzone50.renaissance-go.de.com",
+"https://gamingjt.pages.devtems.com.lightspeedsystems.help",
+"https://gavinlovesblackpeople.bg.geek.nz",
+"https://comflksdf.bg.geek.nz",
+"https://google.googlerussia.bg.geek.nz",
+"https://getmedonline.cominaonline.websitecom.lightspeedsystems.help",
+"https://glowal-zone50.renaissance-go.de.com",
+"https://cejas.mxbco.comvcom.lightspeedsystems.help",
+"https://game.bg.geek.nz",
+"https://skibidi.void.radio.am",
+"https://168.nip.io",
+"https://fllage.site.bg.geek.nz",
+"https://muncz.deuahpfiaweoawoiefa-zone50.renaissance-go.de.com",
+"https://brent-zone50.renaissance-go.de.com",
+"https://doidwol.bg.geek.nz",
+"https://global-zoneq50.renaissance-go.de.com",
+"https://2fdrgrf8yhjut4wes8d7yunggyuh.bg.geek.nz",
+"https://www.glohal.zone50.renaissance-go.de.com",
+"https://global-zone5999.renaissance",
+"https://doiddwoi.bg.geek.nz",
+"https://co.ukdsystems.helplightspeedsystems.com.lightspeedsystems.help",
+"https://comon.deorg.uksystems.com.lightspeedsystems.help",
+"https://stydent.bcsdy.org.void.radio.am",
+"https://david.is.a.fortnite.hacker.bg.geek.nz",
+"https://express.adobe.org.com.bg.geek.nz",
+"https://bcsdny.org.void.radio.am",
+"https://cdn.covid-23.comspeedsystems.com.lightspeedsystems.help",
+"https://edu.confront.net.bg.geek.nz",
+"https://zone61.renaissance",
+"https://comogle.googlerussia.bg.geek.nz",
+"https://globle-zone50.renaissance-go.de.com",
+"https://black-zone50.renaissance",
+"https://confront.net.bg.geek.nz",
+"https://global--zone50.renaissance-go.de.com",
+"https://global-zone16.renaissance-go.de.com",
+"https://ddjjdjdjdjdjdjdjdjdjdjdjjdhddjddjdj.bg.geek.nz",
+"https://glabal-zonee50.renaissance-go.de.com",
+"https://abc.express.adobe.com.bg.geek.nz",
+"https://com.idghtspeedsystems.helplightspeedsystems.com.lightspeedsystems.help",
+"https://compeedsystems.com.lightspeedsystems.help",
+"https://atom.lightspeedsystems.help",
+"https://fiba3x3vs.comhopystems.com.lightspeedsystems.help",
+"https://gavinwithasmalljohnson.bg.geek.nz",
+"https://global-zone54.renaissance-go.de.com",
+"https://comder.com.com.lightspeedsystems.help",
+"https://com.void.radio.am",
+"https://globle-zones50.renaissance",
+"https://gmail.sciencetextbook.minecraftnoob.com",
+"https://www.gobal-zone50.renaissance-go.de.com",
+"https://canvas-global50.renaissance-go.de.com",
+"https://global.zones0.renaissance-go.de.com",
+"https://com.aums.helplightspeedsystems.com.lightspeedsystems.help",
+"https://16johnncrossingroad.bg.geek.nz",
+"https://16jlhncrossedroad.bg.geek.nz",
+"https://asdjbwahbdsdsaasd.adwadafawf.awfawfawf.bcsdny.org.void.radio.am",
+"https://global-zone40.renaissance",
+"https://gllobbal-zone50.renaissance",
+"https://deplightspeedsystems.com.lightspeedsystems.help",
+"https://www.org.org.org.void.radio.am",
+"https://goval-zone50.renaissance",
+"https://hamktu.bg.geek.nz",
+"https://cloundfront.net",
+"https://ms.void.radio.am",
+"https://gloel-zone50.renaissance",
+"https://5969.herokuspace.comom.lightspeedsystems.help",
+"https://comdsystems.com.lightspeedsystems.help",
+"https://google.com.redirectingload.bg.geek.nz",
+"https://www.renaissance-go.de.com",
+"https://basketball.zone50.renaissance-go.de.com",
+"https://hlabal-zone50.renaissance",
+"https://global.zone",
+"https://diors.link.gurdit.com",
+"https://gloval-zone90.renaissance",
+"https://elitcarrental.comyapp.complightspeedsystems.com.lightspeedsystems.help",
+"https://global-zone49.renaissance-go.de.com",
+"https://ihatelearning-zone50.renaissance",
+"https://dvolnleqtt.marchd.ru",
+"https://comc.comcing.compeedsystems.com.lightspeedsystems.help",
+"https://duck.bg.geek.nz",
+"https://doidwoi.bg.geek.nz",
+"https://docs.google.com.org.void.radio.am",
+"https://zone.50.renaissance-go.de.com",
+"https://comrost.pl.com.lightspeedsystems.help",
+"https://void.radio.fm",
+"https://comm.lightspeedsystems.help",
+"https://fsdkjfhbsdkfjshbdrjhkffbhjkdrszbfjksdhrbfkjhsdrbf.bg.geek.nz",
+"https://diebob.globalwireandcable.com",
+"https://freethechildren.bg.geek.nz",
+"https://www.gloval-zone70.renaissance-go.de.com",
+"https://global.zones.renaissance",
+"https://freekidsinmybasement.bg.geek.nz",
+"https://gloval-pdiddy.renaissance",
+"https://grfgdijohtvkjdvxkjbfxhbjcvxkj.bg.geek.nz",
+"https://ds213airml.synology.met.quickconnect.toom.lightspeedsystems.help",
+"https://www.global-50.renaissance-go.de.com",
+"https://comeing.compeedsystems.com.lightspeedsystems.help",
+"https://www.global-zone-59.renaissance-go.de.com",
+"https://glovle-zone.renaissance-go.de.com",
+"https://global50.renaissance"
+  ];
+
+  const linkList = document.getElementById("linkList");
+
+  links.forEach(link => {
+    const a = document.createElement("a");
+    a.className = "link";
+    a.href = link;
+    a.target = "_blank";
+    a.textContent = link;
+    linkList.appendChild(a);
+  });
+
+  function toggleLinks() {
+    const list = document.getElementById("linkList");
+    list.style.display = list.style.display === "flex" ? "none" : "flex";
+  }
+</script>
+
+<!-- tsParticles Config -->
+<script>
+  tsParticles.load("tsparticles", {
+    fullScreen: { enable: false },
+    background: { color: "#000000" },
+    fpsLimit: 60,
+    particles: {
+      number: { value: 100 },
+      color: { value: "#00ff9f" },
+      shape: { type: "circle" },
+      opacity: { value: 0.5 },
+      size: { value: 2 },
+      move: {
+        enable: true,
+        speed: 1,
+        direction: "none",
+        outModes: "bounce"
+      }
+    },
+    interactivity: {
+      events: {
+        onHover: { enable: true, mode: "repulse" },
+        resize: true
+      },
+      modes: {
+        repulse: { distance: 100, duration: 0.4 }
+      }
+    },
+    detectRetina: true
+  });
+</script>
+
+</body>
+</html>
